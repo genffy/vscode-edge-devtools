@@ -369,8 +369,8 @@ export function getPlatform(): Platform {
 export async function getBrowserPath(config: Partial<IUserConfig> = {}): Promise<string> {
     const settings = vscode.workspace.getConfiguration(SETTINGS_STORE_NAME);
     const flavor: BrowserFlavor | undefined = config.browserFlavor || settings.get('browserFlavor');
-
-    switch (getPlatform()) {
+    const platform = getPlatform();
+    switch (platform) {
         case 'Windows': {
            return await verifyFlavorPath(flavor, 'Windows');
         }
@@ -832,10 +832,12 @@ export function getSupportedStaticAnalysisFileTypes(): string[] {
 }
 
 (function initialize() {
+    // TODO add chrome ?
     // insertion order matters.
     msEdgeBrowserMapping.set('Stable', {
         debianLinux: '/opt/microsoft/msedge/msedge',
-        osx: '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
+        // osx: '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
+        osx: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
         windows: {
             primary: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
             secondary: path.join(WIN_APP_DATA, 'Microsoft\\Edge\\Application\\msedge.exe'),
@@ -843,7 +845,8 @@ export function getSupportedStaticAnalysisFileTypes(): string[] {
     });
     msEdgeBrowserMapping.set('Beta', {
         debianLinux: '/opt/microsoft/msedge-beta/msedge',
-        osx: '/Applications/Microsoft Edge Beta.app/Contents/MacOS/Microsoft Edge Beta',
+        // osx: '/Applications/Microsoft Edge Beta.app/Contents/MacOS/Microsoft Edge Beta',
+        osx: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
         windows: {
             primary: 'C:\\Program Files (x86)\\Microsoft\\Edge Beta\\Application\\msedge.exe',
             secondary: path.join(WIN_APP_DATA, 'Microsoft\\Edge Beta\\Application\\msedge.exe'),
@@ -851,7 +854,8 @@ export function getSupportedStaticAnalysisFileTypes(): string[] {
     });
     msEdgeBrowserMapping.set('Dev', {
         debianLinux: '/opt/microsoft/msedge-dev/msedge',
-        osx: '/Applications/Microsoft Edge Dev.app/Contents/MacOS/Microsoft Edge Dev',
+        // osx: '/Applications/Microsoft Edge Dev.app/Contents/MacOS/Microsoft Edge Dev',
+        osx: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
         windows: {
             primary: 'C:\\Program Files (x86)\\Microsoft\\Edge Dev\\Application\\msedge.exe',
             secondary: path.join(WIN_APP_DATA, 'Microsoft\\Edge Dev\\Application\\msedge.exe'),
@@ -859,7 +863,8 @@ export function getSupportedStaticAnalysisFileTypes(): string[] {
     });
     msEdgeBrowserMapping.set('Canary', {
         debianLinux: '/opt/microsoft/msedge-canary/msedge',
-        osx: '/Applications/Microsoft Edge Canary.app/Contents/MacOS/Microsoft Edge Canary',
+        // osx: '/Applications/Microsoft Edge Canary.app/Contents/MacOS/Microsoft Edge Canary',
+        osx: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
         windows: {
             primary: 'C:\\Program Files (x86)\\Microsoft\\Edge SxS\\Application\\msedge.exe',
             secondary: path.join(WIN_APP_DATA, 'Microsoft\\Edge SxS\\Application\\msedge.exe'),
